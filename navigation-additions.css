@@ -1,0 +1,6 @@
+/* Add these rules to assets/css/styles.css for the new portal navigation links. */
+.nav-governance{display:inline-flex;align-items:center;gap:.45rem;padding:.62rem .9rem;border:1px solid rgba(37,216,188,.35);border-radius:999px;color:#b8f5e4;text-decoration:none;font-weight:700;transition:background .2s ease,border-color .2s ease}
+.nav-governance:hover,.nav-governance:focus-visible{background:rgba(37,216,188,.12);border-color:#25d8bc}
+.footer-governance{display:inline-flex;align-items:center;gap:.5rem;color:#8ce3b0;text-decoration:none;font-weight:700}
+.footer-governance:hover,.footer-governance:focus-visible{text-decoration:underline}
+@media(max-width:900px){.nav-governance{margin:.35rem 0}}

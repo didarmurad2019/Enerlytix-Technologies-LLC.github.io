@@ -1,11 +1,6 @@
-Enerlytix By-Laws Portal — deployment notes
+Updated homepage file:
+- index.html — modernised and includes By-Laws Portal links in navigation and footer.
+- navigation-additions.css — optional CSS rules to style the new links. Add these to your existing assets/css/styles.css if desired.
 
-Files:
-- bylaws-portal.html: standalone portal page intended for the website root.
-- assets/data/bylaws-users.json: requested separate JSON account list.
-- homepage-navigation-snippet.html: optional link to add to the existing site's navigation.
-
-Important security note:
-This is a static HTML/JavaScript demonstration. The JSON file is publicly downloadable from GitHub Pages, and passwords in it can be inspected. The login gate only controls the page's presentation; it does NOT securely protect the By-Laws page or its URL. Do not use real credentials or treat this as access control. For real restriction, use a server-side authentication service and protect the document itself.
-
-Replace the placeholder account fields in assets/data/bylaws-users.json. Test via the published site (or a local web server); opening the HTML directly with file:// may prevent fetch from loading the JSON.
+Keep the rest of your existing website files and folder structure. Ensure bylaws-portal.html is in the root directory.
+The contact email remains a placeholder and should be replaced before publishing.
