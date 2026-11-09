@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#082f49">
+  <meta name="description" content="Restricted access portal for Enerlytix Technologies, LLC By-Laws.">
+  <title>By-Laws Access | Enerlytix Technologies, LLC</title>
+  <style>
+    :root{color-scheme:light;--navy:#082f49;--teal:#0e7490;--ink:#173042;--muted:#64748b;--line:#dbe5ec;--paper:#fff}
+    *{box-sizing:border-box}body{margin:0;min-height:100vh;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--ink);background:linear-gradient(135deg,#eaf4f7,#f7fafc 55%,#e9f5ef);display:grid;place-items:center;padding:24px}
+    .shell{width:min(100%,560px)}.brand{display:flex;align-items:center;gap:12px;margin:0 0 24px;color:var(--navy);font-weight:800;letter-spacing:.02em}.mark{display:grid;place-items:center;width:44px;height:44px;border-radius:13px;background:var(--navy);color:#8ce3b0;font-size:22px}
+    .card{background:var(--paper);border:1px solid #e1e9ef;border-radius:24px;padding:clamp(24px,6vw,42px);box-shadow:0 22px 65px #082f4914}.eyebrow{text-transform:uppercase;letter-spacing:.14em;font-size:.72rem;font-weight:800;color:var(--teal)}h1{margin:10px 0 12px;font-size:clamp(1.8rem,5vw,2.4rem);line-height:1.1;color:var(--navy)}.lead{color:var(--muted);line-height:1.65;margin:0 0 26px}
+    label{display:block;font-size:.9rem;font-weight:700;margin:16px 0 8px}input{width:100%;padding:14px 15px;border:1px solid var(--line);border-radius:11px;font:inherit;outline:none}input:focus{border-color:var(--teal);box-shadow:0 0 0 3px #0e74901c}
+    button,.access-link{display:inline-flex;align-items:center;justify-content:center;gap:8px;width:100%;margin-top:22px;padding:14px 18px;border:0;border-radius:11px;background:var(--navy);color:white;font:inherit;font-weight:750;text-decoration:none;cursor:pointer}button:hover,.access-link:hover{background:#0e5a70}
+    .status{min-height:1.5em;margin:14px 0 0;font-size:.9rem;color:#b42318}.fine{margin:20px 0 0;font-size:.78rem;line-height:1.55;color:#748397}.hidden{display:none!important}.back{display:inline-block;margin-top:22px;color:var(--teal);text-decoration:none;font-weight:700}
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <div class="brand"><span class="mark" aria-hidden="true">E</span><span>ENERLYTIX <small style="display:block;font-size:.7rem;font-weight:600;letter-spacing:.08em">TECHNOLOGIES, LLC</small></span></div>
+    <section class="card" aria-labelledby="heading">
+      <div class="eyebrow">Governance documents</div>
+      <h1 id="heading">By-Laws access portal</h1>
+      <p class="lead">Sign in with the account credentials provided to you to continue to the Enerlytix Technologies, LLC By-Laws.</p>
+      <form id="login-form">
+        <label for="username">User Name / Email</label>
+        <input id="username" name="username" type="text" autocomplete="username" required>
+        <label for="password">Password</label>
+        <input id="password" name="password" type="password" autocomplete="current-password" required>
+        <button type="submit">Verify and open By-Laws <span aria-hidden="true">→</span></button>
+        <p class="status" id="status" role="status" aria-live="polite"></p>
+      </form>
+      <div id="success" class="hidden">
+        <p class="lead">Access accepted. Continue to the official By-Laws page.</p>
+        <a class="access-link" href="https://didarmurad2019.github.io/Enerlytix-Technologies-LLC-Bylaws.github.io" target="_blank" rel="noopener noreferrer">Open By-Laws ↗</a>
+      </div>
+      <p class="fine">For assistance with access, contact the organisation’s authorised administrator.</p>
+    </section>
+    <a class="back" href="index.html">← Return to Enerlytix homepage</a>
+  </main>
+  <script>
+    const form = document.getElementById('login-form');
+    const status = document.getElementById('status');
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      status.textContent = 'Checking credentials…';
+      try {
+        const response = await fetch('assets/data/bylaws-users.json', { cache: 'no-store' });
+        if (!response.ok) throw new Error('Could not load account list.');
+        const data = await response.json();
+        const username = document.getElementById('username').value.trim().toLowerCase();
+        const password = document.getElementById('password').value;
+        const match = Array.isArray(data.users) && data.users.some(user =>
+          (String(user.username || '').trim().toLowerCase() === username ||
+           String(user.email || '').trim().toLowerCase() === username) &&
+          String(user.password || '') === password &&
+          user.active !== false
+        );
+        if (!match) {
+          status.textContent = 'The username/email or password is not recognised.';
+          return;
+        }
+        form.classList.add('hidden');
+        status.textContent = '';
+        document.getElementById('success').classList.remove('hidden');
+      } catch (error) {
+        status.textContent = 'Unable to verify access. Check that the portal and JSON file are published together.';
+      }
+    });
+  </script>
+</body>
+</html>
